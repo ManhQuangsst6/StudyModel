@@ -16,7 +16,20 @@ namespace StudyModel.Controllers
         public async Task<string> Get()
         {
             var result = await _dataContext.SaveChangesAsync();
+            var banana = new Food("🍌", 1.95);
+            var apple = new
+            {
+                Name = "🍎",
+                Price = 1.21
+            };
+            var orange = apple with
+            {
+                Name = "🍊"
+                ,
+                Price = banana.Price
+            };
             return result.ToString();
         }
+        public record Food(string Name, double Price);
     }
 }

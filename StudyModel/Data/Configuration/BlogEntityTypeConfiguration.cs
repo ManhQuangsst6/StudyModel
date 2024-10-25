@@ -11,6 +11,10 @@ namespace StudyModel.Data.Configuration
             builder
             .Property(b => b.Url)
             .IsRequired();
+
+            builder
+            .HasKey(x => x.BlogId)
+            .HasName("PrimaryKey_BlogId");
         }
     }
 }
