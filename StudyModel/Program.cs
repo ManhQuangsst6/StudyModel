@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using StudyModel.Middleware;
 using StudyModel.NewFolder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContextFactory<DataContext>(options => options.UseSqlServer(
   builder.Configuration.GetConnectionString("DefaultConnectString")
 ));
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddTransient<FactoryMiddleware>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+//app.UseMiddleware<ConventionMiddleware>();
+app.UseMiddleware<FactoryMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
